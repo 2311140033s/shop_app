@@ -1,0 +1,22 @@
+<h1>カートの中身</h1>
+
+<% if @cart.cart_items.any? %>
+  <table>
+    <tr><th>商品名</th><th>価格</th><th>数量</th><th>小計</th><th></th></tr>
+    <% @cart.cart_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= item.product.price %>円</td>
+        <td><%= item.quantity %></td>
+        <td><%= item.subtotal %>円</td>
+        <td><%= button_to "削除", cart_item_path(item), method: :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <p><strong>合計金額: <%= @cart.cart_items.sum(&:subtotal) %>円</strong></p>
+<% else %>
+  <p>カートは空です。</p>
+<% end %>
+
+<%= link_to "商品一覧に戻る", products_path %>
